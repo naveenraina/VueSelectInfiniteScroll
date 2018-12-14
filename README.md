@@ -4,6 +4,8 @@ vue-select-infinite-scroll is an infinite scroll dropdown with filter input for 
 ```
 npm install vue-select-infinite-scroll --save
 ```
+### Demo
+Check this <a href="http://vueinfinitescroll.clickvalley.in" target="_blank">DEMO LINK</a>
 
 ### Usage
 
@@ -46,10 +48,6 @@ fetchData(params){
   })
 }
 ```
-
-### Demo
-Check this <a href="http://vueinfinitescroll.clickvalley.in" target="_blank">DEMO LINK</a>
-
 
 ### Dependencies
 vue-select-infinite-scroll has following dependencies -
