@@ -54,5 +54,13 @@
     "public/*",
     "*.json",
     "*.js"
+  ],
+  "keywords": [
+    "select",
+    "dropdown",
+    "infinite scroll",
+    "filter",
+    "pagination",
+    "async load"
   ]
 }
