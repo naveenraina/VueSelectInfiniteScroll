@@ -52,8 +52,8 @@ fetchData(params){
 
 
 ### Dependencies
-```
 vue-select-infinite-scroll has following dependencies -
+```
 bootstrap
 bootstrap-vue
 vue-infinite-scroll
