@@ -1,6 +1,6 @@
 {
   "name": "vue-select-infinite-scroll",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "main": "./dist/VueSelectInfiniteScroll.commom.js",
   "private": false,
   "scripts": {
