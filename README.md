@@ -1,6 +1,7 @@
 # vue-select-infinite-scroll
 vue-select-infinite-scroll is an infinite scroll dropdown with filter input for vue.js.
-## Project setup
+
+## Install the library
 ```
 npm install vue-select-infinite-scroll --save
 ```
