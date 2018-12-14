@@ -1,0 +1,112 @@
+<template>
+  <div class="">
+    <b-dropdown :text="selectedRecord.label" class="m-md-2 dd-color" >
+      <b-dropdown-header><input v-model="searchtext" placeholder="Search"></b-dropdown-header>
+      <div class="scroll-div" v-infinite-scroll="loadmore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
+        <template v-if="loading === false">
+        <b-dropdown-item @click="selectme(option)" v-for="option in options" v-bind:key="option.id">{{option.label}}</b-dropdown-item>
+        </template>
+        <template v-if="loading === true">
+        <b-dropdown-item >Loading...</b-dropdown-item>
+        </template>
+      </div>
+    </b-dropdown>
+  </div>
+</template>
+
+<script>
+import infiniteScroll from 'vue-infinite-scroll'
+
+export default {
+  directives: {infiniteScroll},
+  props: {
+    selectedRecord: Object
+  },
+  data(){
+    return {
+      busy: false,
+      loading: false,
+      disableErraticLoading: true,
+      searchtext: '',
+      options: [],
+      page: 0
+
+    }
+  },
+  methods:{
+    selectme(record){
+      // this.$emit('recordSelected', record)
+      this.selectedRecord.id = record.id
+      this.selectedRecord.label = record.label
+    },
+    loadmore(fresh){
+      if(this.disableErraticLoading){
+        return
+      }
+
+      if(this.searchtext === ''){
+        this.options = []
+        this.page = 0
+        return
+      }
+
+      this.busy = true;
+      if(fresh){
+        this.options = []
+        this.page = 0
+        this.loading = true
+      }
+
+      this.$emit('fetchData', {
+        done: data => {
+          data.forEach(x => {
+            this.options.push(x)
+          })
+          this.busy = false
+          this.loading = false
+          this.page = this.page + 1
+        },
+        q: this.searchtext,
+        page: this.page
+      })
+
+    }
+  },
+  watch: {
+    searchtext: function(){
+      this.disableErraticLoading = false
+      this.loadmore(true)
+    }
+  }
+}
+</script>
+<style>
+
+.scroll-div{
+  height: 200px; overflow-y:scroll;
+  width: 400px;
+  margin: 0 auto;
+}
+
+.dropdown-header input{
+  width: 100%;
+  line-height: 25px;
+  font-size: 1rem;
+}
+.dd-color button {
+    background-color: white !important;
+    color: black !important;
+
+}
+
+.dd-color button:hover{
+   background-color: white !important;
+    color: black;
+}
+
+.dd-color button:focus{
+   background-color: white !important;
+    color: black;
+}
+
+</style>
