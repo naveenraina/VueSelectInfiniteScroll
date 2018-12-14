@@ -48,7 +48,7 @@ fetchData(params){
 ```
 
 ### Demo
-<a href="vueinfinitescroll.clickvalley.in">check this demo page</a>
+Check this <a href="http://vueinfinitescroll.clickvalley.in" target="_blank">DEMO LINK</a>
 
 
 ### Dependencies
