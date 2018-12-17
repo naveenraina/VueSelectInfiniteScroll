@@ -1,16 +1,20 @@
 <template>
   <div class="">
     <b-dropdown :text="selectedRecord.label" class="m-md-2 dd-color" >
-      <b-dropdown-header><input v-model="searchtext" placeholder="Search"></b-dropdown-header>
+      <b-dropdown-header>
+        <input v-model="searchtext" placeholder="Search">
+        <img v-if="busy === true" src="../assets/loading.gif" height="30px" width="30px">
+      </b-dropdown-header>
       <div class="scroll-div" v-infinite-scroll="loadmore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
         <template v-if="loading === false">
         <b-dropdown-item @click="selectme(option)" v-for="option in options" v-bind:key="option.id">{{option.label}}</b-dropdown-item>
         </template>
-        <template v-if="loading === true">
+        <!-- <template v-if="loading === true">
         <b-dropdown-item >Loading...</b-dropdown-item>
-        </template>
+        </template> -->
       </div>
     </b-dropdown>
+
   </div>
 </template>
 
@@ -59,12 +63,20 @@ export default {
 
       this.$emit('fetchData', {
         done: data => {
-          data.forEach(x => {
-            this.options.push(x)
-          })
+
+          if(this.searchtext === ''){
+            this.options = []
+            this.page = 0
+          } else {
+            data.forEach(x => {
+              this.options.push(x)
+            })
+            this.page = this.page + 1
+          }
+
           this.busy = false
           this.loading = false
-          this.page = this.page + 1
+
         },
         q: this.searchtext,
         page: this.page
@@ -86,6 +98,15 @@ export default {
   height: 200px; overflow-y:scroll;
   width: 400px;
   margin: 0 auto;
+}
+
+.dropdown-header {
+  padding-left: 10px !important;
+  padding-right: 40px !important;
+}
+
+.dropdown-header img{
+  margin-left: 5px;
 }
 
 .dropdown-header input{
