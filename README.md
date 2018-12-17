@@ -58,3 +58,5 @@ bootstrap-vue
 vue-infinite-scroll
 ```
 
+### Github repo
+visit <a href="https://github.com/naveenraina/VueSelectInfiniteScroll" target="_blank">git repo</a>
