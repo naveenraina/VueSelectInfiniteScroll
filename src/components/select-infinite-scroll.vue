@@ -5,7 +5,7 @@
         <input v-model="searchtext" placeholder="Search">
         <img v-if="busy === true" src="../assets/loading.gif" height="30px" width="30px">
       </b-dropdown-header>
-      <div class="scroll-div" v-infinite-scroll="loadmore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
+      <div class="scroll-div" v-infinite-scroll="loadmore" infinite-scroll-distance="10">
         <template v-if="loading === false">
         <b-dropdown-item @click="selectme(option)" v-for="option in options" v-bind:key="option.id">{{option.label}}</b-dropdown-item>
         </template>
