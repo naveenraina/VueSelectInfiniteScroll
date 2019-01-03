@@ -130,4 +130,9 @@ export default {
     color: black;
 }
 
+.dropdown-toggle::after{
+  margin-left: 14em !important;
+
+}
+
 </style>
