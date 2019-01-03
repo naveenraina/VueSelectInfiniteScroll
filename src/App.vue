@@ -33,6 +33,7 @@ export default {
         let options = vals.map(i => ({
           id: this.lastId + i,
           label: `value-${this.lastId + i}`,
+          tooltip: `value-${this.lastId + i}-tooltip`
         }))
         this.lastId = this.lastId + 9
 
