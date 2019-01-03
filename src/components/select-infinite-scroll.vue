@@ -7,7 +7,7 @@
       </b-dropdown-header>
       <div class="scroll-div" v-infinite-scroll="loadmore" infinite-scroll-distance="10">
         <template v-if="loading === false">
-        <b-dropdown-item @click="selectme(option)" v-for="option in options" v-bind:key="option.id">{{option.label}}</b-dropdown-item>
+        <b-dropdown-item @click="selectme(option)" :title="option.label" v-for="option in options" v-bind:key="option.id">{{option.label}}</b-dropdown-item>
         </template>
         <!-- <template v-if="loading === true">
         <b-dropdown-item >Loading...</b-dropdown-item>
