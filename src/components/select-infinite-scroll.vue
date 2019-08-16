@@ -1,21 +1,18 @@
 <template>
-  <div class="">
-    <b-dropdown :text="selectedRecord.label" class="m-md-2 dd-color" >
-      <b-dropdown-header>
-        <input v-model="searchtext" placeholder="Search">
-        <img v-if="busy === true" src="../assets/loading.gif" height="30px" width="30px">
-      </b-dropdown-header>
-      <div class="scroll-div" v-infinite-scroll="loadmore" infinite-scroll-distance="10">
-        <template v-if="loading === false">
-        <b-dropdown-item @click="selectme(option)" :title="getTooltip(option)" v-for="option in options" v-bind:key="option.id">{{option.label}}</b-dropdown-item>
-        </template>
-        <!-- <template v-if="loading === true">
-        <b-dropdown-item >Loading...</b-dropdown-item>
-        </template> -->
-      </div>
-    </b-dropdown>
-
-  </div>
+  <b-dropdown :text="selectedRecord.label" class="m-md-2 dd-color" >
+    <b-dropdown-header>
+      <input v-model="searchtext" placeholder="Search">
+      <img v-if="busy === true" src="../assets/loading.gif" height="30px" width="30px">
+    </b-dropdown-header>
+    <div class="scroll-div" v-infinite-scroll="loadmore" infinite-scroll-distance="10">
+      <template v-if="loading === false">
+      <b-dropdown-item @click="selectme(option)" :title="getTooltip(option)" v-for="option in options" v-bind:key="option.id">{{option.label}}</b-dropdown-item>
+      </template>
+      <!-- <template v-if="loading === true">
+      <b-dropdown-item >Loading...</b-dropdown-item>
+      </template> -->
+    </div>
+  </b-dropdown>
 </template>
 
 <script>
@@ -116,6 +113,10 @@ export default {
   width: 100%;
   line-height: 25px;
   font-size: 1rem;
+}
+
+.dd-color{
+  width: 100%;
 }
 .dd-color button {
     background-color: white !important;
