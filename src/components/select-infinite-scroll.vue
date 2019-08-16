@@ -133,9 +133,13 @@ export default {
     color: black;
 }
 
-.dropdown-toggle::after{
-  margin-left: 14em !important;
+.dropdown-toggle{
+  width: 100%;
+}
 
+.dropdown-toggle::after{
+  float: right;
+  margin-top: 10px;
 }
 
 </style>
