@@ -8,7 +8,6 @@
     />
   </div>
 </template>
-
 <script>
 import VueSelectInfiniteScroll from "./components/select-infinite-scroll.vue";
 
@@ -37,7 +36,6 @@ export default {
           tooltip: `value-${this.lastId + i}-tooltip`
         }));
         this.lastId = this.lastId + 9;
-
         resolve(options);
       });
     },

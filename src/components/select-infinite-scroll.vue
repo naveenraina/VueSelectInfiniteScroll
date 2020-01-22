@@ -1,146 +1,157 @@
 <template>
-  <b-dropdown :text="selectedRecord.label" class="m-md-2 dd-color" >
-    <b-dropdown-header>
-      <input v-model="searchtext" placeholder="Search">
-      <img v-if="busy === true" src="../assets/loading.gif" height="30px" width="30px">
-    </b-dropdown-header>
-    <div class="scroll-div" v-infinite-scroll="loadmore" infinite-scroll-distance="10">
-      <template v-if="loading === false">
-      <b-dropdown-item @click="selectme(option)" :title="getTooltip(option)" v-for="option in options" v-bind:key="option.id">{{option.label}}</b-dropdown-item>
-      </template>
-      <!-- <template v-if="loading === true">
+  <div class="container">
+    <b-dropdown :text="selectedRecord.label" :style="styling" class="m-md-2 dd-color">
+      <b-dropdown-header>
+        <input v-model="searchtext" placeholder="Search" />
+        <img v-if="busy === true" src="../assets/loading.gif" height="30px" width="30px" />
+      </b-dropdown-header>
+      <div
+        class="scroll-div scrollbar-primary"
+        v-infinite-scroll="loadmore"
+        infinite-scroll-distance="10"
+      >
+        <div class="force-overflow">
+          <template v-if="loading === false">
+            <b-dropdown-item
+              @click="selectme(option)"
+              :title="getTooltip(option)"
+              v-for="option in options"
+              v-bind:key="option.id"
+            >{{ option.label }}</b-dropdown-item>
+          </template>
+        </div>
+        <!-- <template v-if="loading === true">
       <b-dropdown-item >Loading...</b-dropdown-item>
-      </template> -->
-    </div>
-  </b-dropdown>
+        </template>-->
+      </div>
+    </b-dropdown>
+  </div>
 </template>
-
 <script>
-import infiniteScroll from 'vue-infinite-scroll'
-
+import infiniteScroll from "vue-infinite-scroll";
 export default {
-  directives: {infiniteScroll},
+  directives: { infiniteScroll },
   props: {
-    selectedRecord: Object
+    selectedRecord: Object,
+    widthInPX: Number
   },
-  data(){
+  data() {
     return {
       busy: false,
       loading: false,
       disableErraticLoading: true,
-      searchtext: '',
+      searchtext: "",
       options: [],
       page: 0
-
+    };
+  },
+  computed: {
+    styling() {
+      return {
+        width: this.widthInPX + "px"
+      };
     }
   },
-  methods:{
-    getTooltip(option){
-      return option.tooltip ? option.tooltip : option.label
+  methods: {
+    getTooltip(option) {
+      return option.tooltip ? option.tooltip : option.label;
     },
-    selectme(record){
+    selectme(record) {
       // this.$emit('recordSelected', record)
-      this.selectedRecord.id = record.id
-      this.selectedRecord.label = record.label
+      this.selectedRecord.id = record.id;
+      this.selectedRecord.label = record.label;
     },
-    loadmore(fresh){
-      if(this.disableErraticLoading){
-        return
+    loadmore(fresh) {
+      if (this.disableErraticLoading) {
+        return;
       }
-
-      if(this.searchtext === ''){
-        this.options = []
-        this.page = 0
-        return
+      if (this.searchtext === "") {
+        this.options = [];
+        this.page = 0;
+        return;
       }
-
       this.busy = true;
-      if(fresh){
-        this.options = []
-        this.page = 0
-        this.loading = true
+      if (fresh) {
+        this.options = [];
+        this.page = 0;
+        this.loading = true;
       }
-
-      this.$emit('fetchData', {
+      this.$emit("fetchData", {
         done: data => {
-
-          if(this.searchtext === ''){
-            this.options = []
-            this.page = 0
+          if (this.searchtext === "") {
+            this.options = [];
+            this.page = 0;
           } else {
             data.forEach(x => {
-              this.options.push(x)
-            })
-            this.page = this.page + 1
+              this.options.push(x);
+            });
+            this.page = this.page + 1;
           }
-
-          this.busy = false
-          this.loading = false
-
+          this.busy = false;
+          this.loading = false;
         },
         q: this.searchtext,
         page: this.page
-      })
-
+      });
     }
   },
   watch: {
-    searchtext: function(){
-      this.disableErraticLoading = false
-      this.loadmore(true)
+    searchtext: function() {
+      this.disableErraticLoading = false;
+      this.loadmore(true);
     }
   }
-}
+};
 </script>
 <style>
-
-.scroll-div{
-  height: 200px; overflow-y:scroll;
+.scroll-div {
+  height: 200px;
+  overflow-y: scroll;
   width: 400px;
   margin: 0 auto;
 }
-
+.scrollbar-primary::-webkit-scrollbar {
+  width: 12px;
+  background-color: #f5f5f5;
+}
+.scrollbar-primary::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.1);
+  background-color: #c9d1d3;
+}
+/*  */
 .dropdown-header {
   padding-left: 10px !important;
   padding-right: 40px !important;
 }
-
-.dropdown-header img{
+.dropdown-header img {
   margin-left: 5px;
 }
-
-.dropdown-header input{
+.dropdown-header input {
   width: 100%;
   line-height: 25px;
   font-size: 1rem;
 }
-
-.dd-color{
-  width: 100%;
+.dd-color {
+  width: 150px;
 }
 .dd-color button {
-    background-color: white !important;
-    color: black !important;
-
+  background-color: white !important;
+  color: black !important;
 }
-
-.dd-color button:hover{
-   background-color: white !important;
-    color: black;
+.dd-color button:hover {
+  background-color: white !important;
+  color: black;
 }
-
-.dd-color button:focus{
-   background-color: white !important;
-    color: black;
+.dd-color button:focus {
+  background-color: white !important;
+  color: black;
 }
-
-.dropdown-toggle{
+.dropdown-toggle {
   width: 100%;
 }
-
-.dropdown-toggle::after{
+.dropdown-toggle::after {
   float: right;
   margin-top: 10px;
 }
-
 </style>
