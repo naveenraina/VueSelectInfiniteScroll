@@ -2,61 +2,59 @@
   <div id="app">
     <h2>VueSelectInfiniteScroll demo</h2>
     <VueSelectInfiniteScroll
-    :selectedRecord="selectedRecord"
-    @fetchData="fetchData"
+      :selectedRecord="selectedRecord"
+      :widthInPX="myWidth"
+      @fetchData="fetchData"
     />
-
   </div>
 </template>
 
 <script>
-import VueSelectInfiniteScroll from './components/select-infinite-scroll.vue'
+import VueSelectInfiniteScroll from "./components/select-infinite-scroll.vue";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
     VueSelectInfiniteScroll
   },
-  data(){
-    return{
+  data() {
+    return {
       lastId: 0,
-      selectedRecord: {id: 0, label: 'Select...'}
-    }
+      selectedRecord: { id: 0, label: "Select..." },
+      myWidth: 400
+    };
   },
-  methods:{
-    apimethod(){
-      return new Promise((resolve) => {
-        let vals = []
-        for(var i=1; i< 10; i++){
-          vals.push(i)
+  methods: {
+    apimethod() {
+      return new Promise(resolve => {
+        let vals = [];
+        for (var i = 1; i < 10; i++) {
+          vals.push(i);
         }
         let options = vals.map(i => ({
           id: this.lastId + i,
           label: `value-${this.lastId + i}`,
           tooltip: `value-${this.lastId + i}-tooltip`
-        }))
-        this.lastId = this.lastId + 9
+        }));
+        this.lastId = this.lastId + 9;
 
-        resolve(options)
-      })
-
+        resolve(options);
+      });
     },
-    fetchData(params){
+    fetchData(params) {
       setTimeout(() => {
         this.apimethod(params.q, params.page).then(options => {
-        params.done(options)
-      })
+          params.done(options);
+        });
       }, 2000);
-
-
     }
   }
-}
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
