@@ -16,6 +16,7 @@
 </template>
 
 <script>
+// small change.
 import infiniteScroll from 'vue-infinite-scroll'
 
 export default {
