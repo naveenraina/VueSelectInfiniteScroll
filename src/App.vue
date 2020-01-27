@@ -3,6 +3,7 @@
     <h2>VueSelectInfiniteScroll demo</h2>
     <VueSelectInfiniteScroll
     :selectedRecord="selectedRecord"
+    :widthInPX="myWidth"
     @fetchData="fetchData"
     />
 
@@ -20,7 +21,8 @@ export default {
   data(){
     return{
       lastId: 0,
-      selectedRecord: {id: 0, label: 'Select...'}
+      selectedRecord: {id: 0, label: 'Select...'},    
+      myWidth: 400
     }
   },
   methods:{
