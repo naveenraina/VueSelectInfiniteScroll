@@ -1,13 +1,15 @@
 <template>
-  <b-dropdown :text="selectedRecord.label" class="m-md-2 dd-color" >
+  <b-dropdown :text="selectedRecord.label" :style="styling" class="m-md-2 dd-color" variant="outline-secondary" >
     <b-dropdown-header>
       <input v-model="searchtext" placeholder="Search">
-      <img v-if="busy === true" src="../assets/loading.gif" height="30px" width="30px">
+      <img v-if="busy === true" src="../assets/loading.gif" height="25px" width="25px">
     </b-dropdown-header>
-    <div class="scroll-div" v-infinite-scroll="loadmore" infinite-scroll-distance="10">
+    <div class="scroll-div scrollbar-primary" v-infinite-scroll="loadmore" infinite-scroll-distance="10">
+      <div class="force-overflow">
       <template v-if="loading === false">
       <b-dropdown-item @click="selectme(option)" :title="getTooltip(option)" v-for="option in options" v-bind:key="option.id">{{option.label}}</b-dropdown-item>
       </template>
+      </div>
       <!-- <template v-if="loading === true">
       <b-dropdown-item >Loading...</b-dropdown-item>
       </template> -->
@@ -21,7 +23,8 @@ import infiniteScroll from 'vue-infinite-scroll'
 export default {
   directives: {infiniteScroll},
   props: {
-    selectedRecord: Object
+    selectedRecord: Object,
+    widthInPX: Number
   },
   data(){
     return {
@@ -30,11 +33,18 @@ export default {
       disableErraticLoading: true,
       searchtext: '',
       options: [],
-      page: 0
-
+      page: 0,
+      delay: 1000
     }
   },
-  methods:{
+  computed: {
+    styling() {
+      return {
+        width: this.widthInPX + "px"
+      };
+    }
+  },
+  methods:{   
     getTooltip(option){
       return option.tooltip ? option.tooltip : option.label
     },
@@ -86,23 +96,41 @@ export default {
   },
   watch: {
     searchtext: function(){
-      this.disableErraticLoading = false
-      this.loadmore(true)
+       if (this.timeout) clearTimeout(this.timeout); 
+        this.timeout = setTimeout(() => {
+          this.disableErraticLoading = false
+          this.loadmore(true)
+        }, this.delay);
+       
     }
   }
 }
 </script>
 <style>
-
+img {
+    position: absolute;
+    left: 350px;
+    top: 18px;
+}
 .scroll-div{
   height: 200px; overflow-y:scroll;
   width: 400px;
   margin: 0 auto;
 }
 
+.scrollbar-primary::-webkit-scrollbar {
+  width: 12px;
+  background-color: #f5f5f5;
+}
+.scrollbar-primary::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.1);
+  background-color: #D5E3E8;
+}
+
 .dropdown-header {
   padding-left: 10px !important;
-  padding-right: 40px !important;
+  padding-right: 10px !important;
 }
 
 .dropdown-header img{
@@ -120,7 +148,7 @@ export default {
 }
 .dd-color button {
     background-color: white !important;
-    color: black !important;
+    color: #314e4e !important;
 
 }
 
