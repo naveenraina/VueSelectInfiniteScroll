@@ -149,6 +149,7 @@ img {
 .dd-color button {
     background-color: white !important;
     color: #314e4e !important;
+    text-align: left;
 
 }
 
